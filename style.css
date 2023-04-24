@@ -1,0 +1,63 @@
+.wrapper {
+  max-width: 100vh;
+  margin: 0 auto;
+}
+
+.messages {
+  height: 80vh;
+  padding: 20px;
+  background-image: url(img1.jpg);
+  box-sizing: border-box;
+  overflow: scroll;
+}
+
+.message {
+  margin: 5px;
+  background-color: rgb(177, 233, 215);
+  border-radius: 5px 5px 5px 0;
+  padding: 10px;
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+#btnSend {
+  padding: 10px;
+}
+
+.chat {
+  text-align: center;
+  background-color: black;
+  padding-bottom: 5px;
+  box-sizing: border-box;
+}
+
+textarea {
+  width: 100%;
+  resize: none;
+  box-sizing: border-box;
+}
+
+.messages::-webkit-scrollbar {
+  width: 0;
+}
+
+@media (max-width: 500px) {
+  .messages {
+    width: 100%;
+  }
+
+  body {
+    margin: 0;
+  }
+
+  .chat {
+    text-align: center;
+    background-color: black;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+  }
+
+  textarea {
+    width: 100%;
+  }
+}

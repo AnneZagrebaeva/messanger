@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="messages"></div>
+      <div class="chat">
+        <textarea id="userMessage"></textarea>
+        <div>
+          <button
+            id="btnSend"
+            onclick="sendMessage( document.querySelector('#userMessage').value )"
+          >
+            Отправить
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
+<script>
+  let content = "";
+
+  function sendMessage(text) {
+    text = text.trim();
+    let postman = new XMLHttpRequest();
+    postman.open(
+      "GET",
+      "https://flawedpinkbrain.annezagrebaeva.repl.co/?text=" + text
+    );
+    postman.send();
+    document.querySelector("#userMessage").value = "";
+  }
+
+  function showMessages() {
+    const messagesDiv = document.querySelector(".messages");
+    let postman = new XMLHttpRequest();
+    postman.open(
+      "GET",
+      "https://flawedpinkbrain.annezagrebaeva.repl.co/",
+      false
+    );
+    postman.send();
+    if (postman.responseText == content) {
+      return;
+    }
+    content = postman.responseText;
+    let data = JSON.parse(postman.responseText);
+    messagesDiv.innerHTML = "";
+
+    let textAccamulator = "";
+    for (messageNumber in data) {
+      textAccamulator += `
+                <div>
+                    <div class="message">${data[messageNumber]}</div>
+                </div> `;
+    }
+    messagesDiv.innerHTML = textAccamulator;
+    messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+    // for (let i = 0; i < data.length; i++) {
+    //     document.querySelector('.messages').innerHTML += `
+    //     <div>
+    //         <div class="message">${data[i]}</div>
+    //     </div> `;
+    // }
+  }
+
+  setInterval(function () {
+    showMessages();
+  }, 1000);
+
+  document.onkeydown = function (e) {
+    if (e.keyCode == 13) {
+      document.querySelector("#btnSend").click();
+    }
+  };
+</script>
